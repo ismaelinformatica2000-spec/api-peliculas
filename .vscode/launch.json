@@ -5,11 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "chrome",
+            "type": "node",
             "request": "launch",
-            "name": "Iniciar Chrome para localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
+            "name": "Iniciar API",
+            "program": "${workspaceFolder}/server.js",
+            "env": {
+                "PORT": "3000"
+            }
         }
     ]
 }
