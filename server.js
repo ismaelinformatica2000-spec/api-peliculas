@@ -1,8 +1,3 @@
-// ANTES 
-const express = require('express');
-const app = express();
-
-// DESPUÉS (ES Modules - sí funciona)
 import express from 'express';
 const app = express();
 
