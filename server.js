@@ -1,12 +1,21 @@
+// ANTES 
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;  // ← MUY IMPORTANTE
+
+// DESPUÉS (ES Modules - sí funciona)
+import express from 'express';
+const app = express();
+
+const PORT = process.env.PORT || 3000;
 
 // Tus rutas aquí
 app.get('/peliculas', (req, res) => {
     res.json({ mensaje: "Lista de películas" });
 });
 
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en puerto ${PORT}`);
+});
 // Iniciar servidor
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en puerto ${PORT}`);
