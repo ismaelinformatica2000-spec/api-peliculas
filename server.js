@@ -88,6 +88,32 @@ app.post('/peliculas', (req, res) => {
     }
 });
 
+// DELETE eliminar una pelicula
+app.delete('/peliculas/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    
+    const peliculaIndex = peliculas.findIndex(p => p.id === id);
+    
+    if (peliculaIndex === -1) {
+        return res.status(404).json({ 
+            error: "Película no encontrada",
+            mensaje: `No existe una película con ID ${id}`
+        });
+    }
+    
+    const peliculaEliminada = peliculas[peliculaIndex];
+    peliculas.splice(peliculaIndex, 1);
+    
+    res.json({ 
+        mensaje: "Película eliminada exitosamente",
+        peliculaEliminada: peliculaEliminada
+    });
+});
+
+app.listen(PORT, () => {
+    console.log(`✅ Servidor corriendo en puerto ${PORT}`);
+});
+
 // Iniciar servidor
 app.listen(PORT, () => {
     console.log(`✅ Servidor corriendo en puerto ${PORT}`);
