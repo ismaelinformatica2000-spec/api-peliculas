@@ -1,10 +1,29 @@
-import { Sequelize, DataTypes } from "sequelize";
+const { Sequelize } = require('sequelize');
 
-const db = new Sequelize({
-    dialect: "sqlite",
-    storage: "./db.sqlite"
-});
+const databaseUrl = process.env.DATABASE_URL;
 
+const sequelize = databaseUrl
+  ? new Sequelize(databaseUrl, {
+      dialect: 'postgres',
+      logging: false,
+      dialectOptions:
+        process.env.DB_SSL === 'false'
+          ? {}
+          : {
+              ssl: {
+                require: true,
+                rejectUnauthorized: false,
+              },
+            },
+    })
+  : new Sequelize({
+      // SQLite local. Se crea automaticamente.
+      dialect: 'sqlite',
+      storage: 'peliculas.sqlite',
+      logging: false,
+    });
+
+module.exports = sequelize;
 
 // Modelo Película
 export const Pelicula = db.define("peliculas", {
