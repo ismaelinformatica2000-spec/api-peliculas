@@ -1,33 +1,16 @@
 const express = require('express');
-const sequelize = require('./database');
-
-
-const crearPeliculaModelo = require('./models/pelicula');
-const crearPeliculasRouter = require('./routes/peliculas');
-const authRouter = require('./routes/auth');
-const { verificarToken } = require('./middleware/auth');
-
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;  // ← MUY IMPORTANTE
 
-app.use(express.json());
-
-// Modelo
-const Pelicula = crearPeliculaModelo(sequelize);
-
-// Rutas
-app.get('/', (req, res) => {
-  res.send('API funcionando');
+// Tus rutas aquí
+app.get('/peliculas', (req, res) => {
+    res.json({ mensaje: "Lista de películas" });
 });
 
-app.use('/api', authRouter);
-app.use('/', authRouter);
-app.use('/api/peliculas', verificarToken, crearPeliculasRouter(sequelize, Pelicula));
-app.use('/peliculas', verificarToken, crearPeliculasRouter(sequelize, Pelicula));
-
-async function iniciarServidor() {
-  try {
-    await sequelize.sync();
+// Iniciar servidor
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en puerto ${PORT}`);
+});
 
 
 // LOGGER
